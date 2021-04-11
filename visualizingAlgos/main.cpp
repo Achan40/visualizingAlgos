@@ -1,19 +1,27 @@
 #include <SFML/Graphics.hpp>
-#include <vector>
 
-// create one rectangle, val is height of rectangle, sep is vertical location of the rectangle
-sf::RectangleShape createRect(int val, float sep){
-    sf::RectangleShape rect(sf::Vector2f(val,20));
+#include <iostream>
+#include <vector>
+#include <stdlib.h>
+#include <time.h>
+
+
+// create one rectangle, sep is vertical location of the rectangle
+sf::RectangleShape createRect(float sep){
+    // random height value 1-100
+    int val = rand() % 100 + 1;
+    sf::RectangleShape rect(sf::Vector2f(val,10));
     rect.setFillColor(sf::Color::White);
     rect.setOrigin(0,sep);
+    std::cout << val << "\n";
     return rect;
 }
 
 // create a vector of n evenly spaced rectangles
-std::vector<sf::RectangleShape> vectRect(int numofrects, int val,float sep){
+std::vector<sf::RectangleShape> vectRect(int numofrects,float sep){
     std::vector<sf::RectangleShape> vRect; 
-    for(int i = 1; i < numofrects; i++){
-        sf::RectangleShape temp = createRect(val, sep*i*5);
+    for(int i = 1; i <= numofrects + 1; i++){
+        sf::RectangleShape temp = createRect(sep*i*5);
         vRect.push_back(temp);
     }
     return vRect;
@@ -21,9 +29,12 @@ std::vector<sf::RectangleShape> vectRect(int numofrects, int val,float sep){
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    // initialize random seed
+    srand(time(NULL));
 
-    std::vector<sf::RectangleShape> test = vectRect(10,100,-5);
+    sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!");
+
+    std::vector<sf::RectangleShape> test = vectRect(100,-3);
 
     while (window.isOpen())
     {
