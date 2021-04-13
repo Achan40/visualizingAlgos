@@ -4,24 +4,34 @@
 #include <vector>
 #include <stdlib.h>
 #include <time.h>
+#include <string>
 
+// custom rectangle object, inheriting from SFML RectangleShape class
+class CustRect: public sf::RectangleShape{
+    public:
+        // Default constructor, makes a green rectangle of rand height w width of 10
+        CustRect(){
+            this->rectVal = rand() % 500 + 1;
+            this->setSize(sf::Vector2f(rectVal,10));
+            this->setFillColor(sf::Color::Green);
+        }
 
-// create one rectangle, sep is vertical location of the rectangle
-sf::RectangleShape createRect(float sep){
-    // random height value 1-100
-    int val = rand() % 100 + 1;
-    sf::RectangleShape rect(sf::Vector2f(val,10));
-    rect.setFillColor(sf::Color::White);
-    rect.setOrigin(0,sep);
-    std::cout << val << "\n";
-    return rect;
-}
+        // Set y position, useful when creating a vector of our objects
+        void SetY(float someY){this->setOrigin(0,someY);}
 
-// create a vector of n evenly spaced rectangles
-std::vector<sf::RectangleShape> vectRect(int numofrects,float sep){
-    std::vector<sf::RectangleShape> vRect; 
+        // Get the generated random value
+        int GetRandVal(){return rectVal;}
+
+    private:
+        int rectVal;
+};
+
+// function to create a vector of n evenly spaced rectangles
+std::vector<CustRect> vectRect(int numofrects,float sep){
+    std::vector<CustRect> vRect; 
     for(int i = 1; i <= numofrects + 1; i++){
-        sf::RectangleShape temp = createRect(sep*i*5);
+        CustRect temp;
+        temp.SetY(sep*i);
         vRect.push_back(temp);
     }
     return vRect;
@@ -34,7 +44,11 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!");
 
-    std::vector<sf::RectangleShape> test = vectRect(100,-3);
+    std::vector<CustRect> test = vectRect(100,-10);
+
+    for(int i = 1; i < test.size(); i++){
+        std::cout << test[i].GetRandVal() << "\n";
+    }
 
     while (window.isOpen())
     {
