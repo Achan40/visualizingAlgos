@@ -17,25 +17,60 @@ class CustRect: public sf::RectangleShape{
         }
 
         // Set y position, useful when creating a vector of our objects
-        void SetY(float someY){this->setOrigin(0,someY);}
+        void SetPos(float somePos){
+            this->somePos = somePos;
+            this->setOrigin(0,somePos);
+        }
 
         // Get the generated random value
         int GetRandVal(){return rectVal;}
 
-    private:
+        // Get the position value
+        int GetPos(){return somePos;}
+
         int rectVal;
+        int somePos;
 };
 
 // function to create a vector of n evenly spaced rectangles
-std::vector<CustRect> vectRect(int numofrects,float sep){
+std::vector<CustRect> vectRect(int numofrects,int sep){
     std::vector<CustRect> vRect; 
-    for(int i = 1; i <= numofrects + 1; i++){
+    for(int i = 0; i <= numofrects - 1; i++){
         CustRect temp;
-        temp.SetY(sep*i);
+        temp.SetPos(sep*i);
         vRect.push_back(temp);
     }
     return vRect;
 }
+
+// swap object values function for use in bubble sort function
+void swap(int *x, int *y){
+    int temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+// void swapPos(int *x, int *y, CustRect tempClass){
+//     int temp = *x;
+//     *x = *y;
+//     *y = temp;
+//     tempClass.SetPos(temp);
+// }
+
+// function to implement bubble sort for vector of CustRect objects
+void bubbleSort(std::vector<CustRect> &someVect){
+    int i, j;
+    for(i = 0; i < someVect.size()-1; i++){
+        for(j = 0; j < someVect.size()-i-1; j++){
+            if(someVect[j].rectVal > someVect[j + 1].rectVal){
+                swap(&someVect[j].rectVal, &someVect[j+1].rectVal);
+                swap(&someVect[j].somePos, &someVect[j+1].somePos);
+                someVect[j+1].SetPos(someVect[j].somePos);
+            }
+        }
+    }
+}
+
 
 int main()
 {
@@ -46,10 +81,19 @@ int main()
 
     std::vector<CustRect> test = vectRect(100,-10);
 
-    for(int i = 1; i < test.size(); i++){
-        std::cout << test[i].GetRandVal() << "\n";
+    for(int i = 0; i < test.size(); i++){
+        printf("%d ", test[i].rectVal);
+        printf("%d ", test[i].somePos);
     }
+    std::cout << "\n";
 
+    bubbleSort(test);
+
+    for(int i = 0; i < test.size(); i++){
+        printf("%d ", test[i].rectVal);
+        printf("%d ", test[i].somePos);
+    }
+    
     while (window.isOpen())
     {
         sf::Event event;
@@ -60,7 +104,7 @@ int main()
         }
 
         window.clear();
-        for(int i = 1; i < test.size(); i++){
+        for(int i = 0; i < test.size(); i++){
             window.draw(test[i]);
         }
         window.display();
