@@ -1,2 +1,2 @@
 # visualizingAlgos
-Using SFML with c++ to visualize algorithms. 
+Using [SFML](https://www.sfml-dev.org/download.php) with c++ to visualize algorithms. 
