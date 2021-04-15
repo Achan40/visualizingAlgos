@@ -1,18 +1,16 @@
 #ifndef CUSTRECT
 #define CUSTRECT
 
+#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 #include <iostream>
 #include <vector>
 #include <stdlib.h>
-#include <time.h>
-#include <string>
-#include <chrono>
-#include <mingw-std-threads/mingw.thread.h>
 
 // custom rectangle object, inheriting from SFML RectangleShape class
 class CustRect: public sf::RectangleShape{
     public:
-        // Default constructor, makes a green rectangle of rand height w width of 10
+        // Default constructor, makes a green rectangle of rand height and fixed width
         CustRect(){
             this->rectVal = rand() % 500 + 1;
             this->setSize(sf::Vector2f(rectVal,10));
@@ -20,7 +18,7 @@ class CustRect: public sf::RectangleShape{
         }
 
         // Set height of rectangle
-        // fixed width of 10
+        // fixed width
         void SetSize(int temp){
             this->rectVal = temp;
             this->setSize(sf::Vector2f(rectVal,10));
@@ -29,7 +27,7 @@ class CustRect: public sf::RectangleShape{
         // Get the generated random value
         int GetRandVal(){return rectVal;}
 
-        // function to create a vector of n evenly spaced CustRect objects
+        // function to create a vector of n CustRect objects spaced by some sep value CustRect objects
         static std::vector<CustRect> vectRect(int numofrects,int sep){
             std::vector<CustRect> vRect; 
             for(int i = 0; i <= numofrects - 1; i++){
@@ -49,12 +47,16 @@ class CustRect: public sf::RectangleShape{
         }
 
         // function to implement bubble sort for vector of CustRect objects
-        static void bubbleSort(std::vector<CustRect> &vector){
+        static void bubbleSort(std::vector<CustRect> &vector, sf::RenderWindow &window){
             int i, j;
             for(i = 0; i < vector.size()-1; i++){
                 for(j = 0; j < vector.size()-i-1; j++){
                     if(vector[j].rectVal > vector[j+1].rectVal){
                         swap(vector[j],vector[j+1]);
+
+                        // window.draw(vector[j]);
+                        // window.draw(vector[j+1]);
+                        // sf::sleep(sf::milliseconds(115));
                     }
                 }
             }

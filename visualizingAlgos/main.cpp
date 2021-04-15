@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+
 #include <CustRect.h>
 
 int main()
@@ -21,14 +21,17 @@ int main()
                 window.close();
             // sort rectangles when spacebar is pressed
             if (event.key.code == sf::Keyboard::Space){
-                // std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-                CustRect::bubbleSort(test);
+                for(int i = 0; i < test.size(); i++){
+                    window.draw(test[i]);
+                    sf::sleep(sf::milliseconds(170));
+                }
             }
         }
         window.clear();
         // draw rectangles of random height upon opening exe
         for(int i = 0; i < test.size(); i++){
             window.draw(test[i]);
+            // sf::sleep(sf::milliseconds(170));
         }
         window.display();
     }
