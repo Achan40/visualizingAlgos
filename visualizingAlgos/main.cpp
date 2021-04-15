@@ -16,20 +16,17 @@ class CustRect: public sf::RectangleShape{
             this->setFillColor(sf::Color::Green);
         }
 
-        // Set y position, useful when creating a vector of our objects
-        void SetPos(float somePos){
-            this->somePos = somePos;
-            this->setOrigin(0,somePos);
+        // Set height of rectangle
+        // fixed width of 10
+        void SetSize(int temp){
+            this->rectVal = temp;
+            this->setSize(sf::Vector2f(rectVal,10));
         }
 
         // Get the generated random value
         int GetRandVal(){return rectVal;}
 
-        // Get the position value
-        int GetPos(){return somePos;}
-
         int rectVal;
-        int somePos;
 };
 
 // function to create a vector of n evenly spaced rectangles
@@ -37,62 +34,37 @@ std::vector<CustRect> vectRect(int numofrects,int sep){
     std::vector<CustRect> vRect; 
     for(int i = 0; i <= numofrects - 1; i++){
         CustRect temp;
-        temp.SetPos(sep*i);
+        temp.setPosition(0,sep*i);
         vRect.push_back(temp);
     }
     return vRect;
 }
-
-// swap object values function for use in bubble sort function
-void swap(int *x, int *y){
-    int temp = *x;
-    *x = *y;
-    *y = temp;
-}
-
-// void swapPos(int *x, int *y, CustRect tempClass){
-//     int temp = *x;
-//     *x = *y;
-//     *y = temp;
-//     tempClass.SetPos(temp);
-// }
 
 // function to implement bubble sort for vector of CustRect objects
 void bubbleSort(std::vector<CustRect> &someVect){
     int i, j;
     for(i = 0; i < someVect.size()-1; i++){
         for(j = 0; j < someVect.size()-i-1; j++){
-            if(someVect[j].rectVal > someVect[j + 1].rectVal){
-                swap(&someVect[j].rectVal, &someVect[j+1].rectVal);
-                swap(&someVect[j].somePos, &someVect[j+1].somePos);
-                someVect[j+1].SetPos(someVect[j].somePos);
+            if(someVect[j].rectVal > someVect[j+1].rectVal){
+                // Store value(height of rectangle), then swap
+                int temp = someVect[j].rectVal;
+                someVect[j].SetSize(someVect[j+1].rectVal);
+                someVect[j+1].SetSize(temp);
             }
         }
     }
 }
-
 
 int main()
 {
     // initialize random seed
     srand(time(NULL));
 
+    // render window size and window heading
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!");
 
-    std::vector<CustRect> test = vectRect(100,-10);
-
-    for(int i = 0; i < test.size(); i++){
-        printf("%d ", test[i].rectVal);
-        printf("%d ", test[i].somePos);
-    }
-    std::cout << "\n";
-
-    bubbleSort(test);
-
-    for(int i = 0; i < test.size(); i++){
-        printf("%d ", test[i].rectVal);
-        printf("%d ", test[i].somePos);
-    }
+    // create a vector of CustRect objects
+    std::vector<CustRect> test = vectRect(100,10);
     
     while (window.isOpen())
     {
@@ -101,9 +73,15 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+            // sort rectangles when spacebar is pressed
+            if (event.key.code == sf::Keyboard::Space){
+                
+                bubbleSort(test);
+                
+            }
         }
-
         window.clear();
+        // draw rectangles of random height upon opening exe
         for(int i = 0; i < test.size(); i++){
             window.draw(test[i]);
         }
