@@ -68,6 +68,8 @@ class CustRect: public sf::RectangleShape{
             }
         }
 
+        // return object
+        CustRect operator()() {return *this;}
 };
 
 #endif 
