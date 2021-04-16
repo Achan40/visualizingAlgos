@@ -1,5 +1,15 @@
-
+#include <functional>
 #include <CustRect.h>
+
+//thread testing
+sf::Mutex mutex;
+void newThread(std::vector<CustRect> &test){
+    for(int i = 0; i < test.size(); i++){
+        test[i].setFillColor(sf::Color::Red);
+        test[i].SetSize(500);
+        std::cout << "THIS IS A THREAD" << "\n";
+    }
+}
 
 int main()
 {
@@ -26,28 +36,35 @@ int main()
             // function to implement bubble sort for vector of CustRect objects
             if (event.key.code == sf::Keyboard::Space){
                 // jj += 1;
-                // // CustRect::bubbleSort(test);
+                // CustRect::bubbleSort(test);
                 // if (test[jj].rectVal > test[jj+1].rectVal){
                 //     CustRect::swap(test[jj],test[jj+1]);
                 //     std::cout << jj << "\n";
                 // }
 
                 // janky code.. last resort if threads don't pan out...
-                for (loop; loop < test.size()-1; loop++){
-                    test[loop].setFillColor(sf::Color::Red);
-                    std::cout << loop << "\n";
-                    std::cout << "stop" << "\n";
-                    loop++;
-                    break;
-                    // sf::sleep(sf::milliseconds(170));
-                }
+                // for (loop; loop < test.size()-1; loop++){
+                //     test[loop].setFillColor(sf::Color::Red);
+                //     std::cout << loop << "\n";
+                //     std::cout << "stop" << "\n";
+                //     loop++;
+                //     break;
+                //     // sf::sleep(sf::milliseconds(170));
+                // }
+                
+                //thread object
+                sf::Thread thread(&newThread,std::ref(test));
+                thread.launch();
+                
             }
         }
-        window.clear();
         // draw rectangles of random height upon opening exe
-        for(auto i: test){
+        window.clear();
+        for (auto i:test){
             window.draw(i);
+            std::cout << i.rectVal << "\n";
         }
+
         window.display();
     }
 
