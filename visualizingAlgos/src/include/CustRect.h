@@ -9,7 +9,12 @@
 
 // custom rectangle object, inheriting from SFML RectangleShape class
 class CustRect: public sf::RectangleShape{
+    private:
+   
     public:
+        //value of randomly generated number
+        int rectVal; 
+
         // Default constructor, makes a green rectangle of rand height and fixed width
         CustRect(){
             this->rectVal = rand() % 500 + 1;
@@ -47,22 +52,22 @@ class CustRect: public sf::RectangleShape{
         }
 
         // function to implement bubble sort for vector of CustRect objects
-        static void bubbleSort(std::vector<CustRect> &vector, sf::RenderWindow &window){
+        static void bubbleSort(std::vector<CustRect> &vector){
             int i, j;
             for(i = 0; i < vector.size()-1; i++){
+                // bool hasSwapped = false;
                 for(j = 0; j < vector.size()-i-1; j++){
                     if(vector[j].rectVal > vector[j+1].rectVal){
                         swap(vector[j],vector[j+1]);
-
-                        // window.draw(vector[j]);
-                        // window.draw(vector[j+1]);
-                        // sf::sleep(sf::milliseconds(115));
+                        // hasSwapped = true;
                     }
                 }
+                // if (!hasSwapped){
+                //     break;
+                // }
             }
         }
 
-        int rectVal;
 };
 
 #endif 
