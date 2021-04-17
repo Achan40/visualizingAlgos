@@ -21,21 +21,20 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "visualizingAlgos");
 
     // create a vector of CustRect objects
-    std::vector<CustRect> test = CustRect::vectRect(10,10);
+    std::vector<CustRect> test = CustRect::vectRect(100,10);
 
     std::vector<CustRect> test2;
 
     // thread
     sf::Thread thread(&newThread,std::ref(test));
-
-    int loop = 0;
-    int jj = 0;
     
     // Start the clock
     sf::Clock clock;
 
     // detect if space pressed
     bool spacepressed = false;
+
+    bool hasSwapped;
 
     while (window.isOpen())
     {
@@ -79,9 +78,22 @@ int main()
                 
             }
         }
-        if (spacepressed == true && elapsed.asSeconds() > 3){
+        if (spacepressed == true && elapsed.asSeconds() > 1){
             std::cout << "Restart" << "\n";
             clock.restart();
+            // for(iter; iter < test.size(); iter++){
+            //     test[iter].setFillColor(sf::Color::Red);
+            //     iter++;
+            //     break;
+            // }
+            for(int iter1 = 0; iter1 < test.size(); iter1++){
+                for(int iter2 = 0; iter2 < test.size()-iter1-1; iter2++){
+                    if(test[iter2].rectVal > test[iter2+1].rectVal){
+                        CustRect::swap(test[iter2],test[iter2+1]);
+                        break;
+                    }
+                }
+            }
         }
         // draw rectangles of random height upon opening exe
         window.clear();
