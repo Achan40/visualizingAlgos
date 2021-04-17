@@ -34,7 +34,11 @@ int main()
     // detect if space pressed
     bool spacepressed = false;
 
-    bool hasSwapped;
+    bool has_ended = false;
+
+    int jj = 0;
+    int *jjpointer; 
+    int ii = test.size();
 
     while (window.isOpen())
     {
@@ -78,22 +82,50 @@ int main()
                 
             }
         }
-        if (spacepressed == true && elapsed.asSeconds() > 1){
-            std::cout << "Restart" << "\n";
+        if (spacepressed == true && elapsed.asSeconds() > .001 && has_ended == false){
+            test[jj].setFillColor(sf::Color::Red);
+            test[jj+1].setFillColor(sf::Color::Red);
+            test[jj].setFillColor(sf::Color::Green);
+
             clock.restart();
-            // for(iter; iter < test.size(); iter++){
-            //     test[iter].setFillColor(sf::Color::Red);
-            //     iter++;
-            //     break;
-            // }
-            for(int iter1 = 0; iter1 < test.size(); iter1++){
-                for(int iter2 = 0; iter2 < test.size()-iter1-1; iter2++){
-                    if(test[iter2].rectVal > test[iter2+1].rectVal){
-                        CustRect::swap(test[iter2],test[iter2+1]);
-                        break;
-                    }
-                }
+
+            if (jj == ii-1){
+                int * ptr;
+                ptr = &jj;
+                *ptr = 0;
+                ii--;
+                std::cout << "reset loop";
+            } else if (ii == 1){
+                has_ended = true;
+                test[jj].setFillColor(sf::Color::Red);
+                test[jj-1].setFillColor(sf::Color::Red);
             }
+            
+            if (test[jj].rectVal > test[jj+1].rectVal){
+                CustRect::swap(test[jj],test[jj+1]);
+            }
+
+            jj++;
+            
+            
+
+            // for(int iter1 = 0; iter1 < test.size()-1; iter1++){
+            //     bool hasSwapped = false;
+            //     for(int iter2 = 0; iter2 < test.size()-iter1-1; iter2++){
+                    
+            //         if(test[iter2].rectVal > test[iter2+1].rectVal){
+            //             CustRect::swap(test[iter2],test[iter2+1]);
+            //             hasSwapped = true;
+                        
+            //             std::cout << "swap\n";
+                        
+            //         }
+            //     }
+            //     if (hasSwapped == true){
+            //         std::cout << "display result";
+            //         break;
+            //     }
+            // }
         }
         // draw rectangles of random height upon opening exe
         window.clear();
