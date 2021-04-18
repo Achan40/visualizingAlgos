@@ -6,20 +6,27 @@
 class Sortable{
     public:
         std::vector<CustRect> vCustRect;
+        std::vector<CustRect> vResetCustRect;
         sf::Clock clock;
         int jj;
         int ii;
-        bool space_pressed;
+        bool begin_bubble;
         bool has_ended;
 
         Sortable(std::vector<CustRect> vector){
             this-> vCustRect = vector;
+            this-> vResetCustRect = vector;
             this-> jj = 0;
             this-> ii = vector.size();
-            this-> space_pressed = false;
+            this-> begin_bubble = false;
             this-> has_ended = false;
         }
         ~Sortable(){};
+
+        void resetIterators(){
+            jj = 0;
+            ii = vCustRect.size();
+        }
 
         /* Implementing bubble sort. When the SFML window is open, the program is constantly looping.
         Therefore, it is not possible implement bubble sort the usual way with a loop (otherwise SFML will
@@ -29,7 +36,7 @@ class Sortable{
             // create time object using the clock. This is so we can manage how fast each iteration occurs.
             sf::Time elapsed = clock.getElapsedTime();
             // If the a certain key is pressed, the length of time since the method was called is greater than n seconds, and the sort has not ended...
-            if (space_pressed == true && elapsed.asSeconds() > .01 && has_ended == false){
+            if (begin_bubble == true && elapsed.asSeconds() > .001 && has_ended == false){
                 // Set color, so that we can see which shape is being sorted at the moment
                 vCustRect[jj].setFillColor(sf::Color::Red);
                 vCustRect[jj+1].setFillColor(sf::Color::Red);
@@ -56,6 +63,7 @@ class Sortable{
                     has_ended = true;
                     vCustRect[jj].setFillColor(sf::Color::Red);
                     vCustRect[jj-1].setFillColor(sf::Color::Red);
+                    resetIterators();
                 }
             }
         }
