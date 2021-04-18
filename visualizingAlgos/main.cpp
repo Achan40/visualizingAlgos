@@ -8,17 +8,15 @@ int main()
     // render window size and window heading
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "visualizingAlgos");
 
-    // create a vector of CustRect objects
-    std::vector<CustRect> x = CustRect::vectRect(50,10);
+    // create a vector of CustRect objects. (number of objects, some separator)
+    std::vector<CustRect> x = CustRect::vectRect(100,10);
 
+    // create a Sortable object which takes in a vector of CustRect objects
     Sortable test(x);
-    
-    // Start the clock
-    sf::Clock clock;
 
     while (window.isOpen())
     {
-        sf::Time elapsed = clock.getElapsedTime();
+        // sf::Time elapsed = clock.getElapsedTime();
         sf::Event event;
 
         while (window.pollEvent(event))
@@ -31,14 +29,19 @@ int main()
                 test.space_pressed = true;  
             }
         }
-        test.bubbleSort(clock,elapsed);
+        /* The bubbleSort method updates the vector every swap/move. Since SFML output
+        is in a permanant loop while the window is open, we had to accout for this in our
+        implementation
+        */
+        test.bubbleSort();
 
-        // draw rectangles of random height upon opening exe
+        // begin drawing entire vector
         window.clear();
 
         for (int i = 0; i < test.vCustRect.size(); i++){
             window.draw(test.vCustRect[i]);
         }
+
         window.display();
     }
 
