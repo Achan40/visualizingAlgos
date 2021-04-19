@@ -6,5 +6,5 @@ This project currently works to visualize the following sorting algorithms:
 * Bubble Sort 
 
 ### Instructions
-Press 'R' to reset sorting.
-Press 'B' to sort using the Bubble Sort algorithm.
+Press '''R''' to reset sorting.
+Press '''B''' to sort using the Bubble Sort algorithm.
