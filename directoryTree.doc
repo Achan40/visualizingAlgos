@@ -1,0 +1,154 @@
+Folder PATH listing for volume NVMEmain
+
+C:.
+|   .gitignore
+|   directoryTree.doc
+|   LICENSE
+|   README.md
+|   
+\---visualizingAlgos
+    |   main.cpp
+    |   main.exe
+    |   main.o
+    |   Makefile
+    |   sfml-audio-2.dll
+    |   sfml-graphics-2.dll
+    |   sfml-network-2.dll
+    |   sfml-system-2.dll
+    |   sfml-window-2.dll
+    |   
+    +---.vscode
+    |       settings.json
+    |       
+    \---src
+        +---include
+        |   |   CustRect.h
+        |   |   Sortable.h
+        |   |   
+        |   \---SFML
+        |       |   Audio.hpp
+        |       |   Config.hpp
+        |       |   GpuPreference.hpp
+        |       |   Graphics.hpp
+        |       |   Main.hpp
+        |       |   Network.hpp
+        |       |   OpenGL.hpp
+        |       |   System.hpp
+        |       |   Window.hpp
+        |       |   
+        |       +---Audio
+        |       |       AlResource.hpp
+        |       |       Export.hpp
+        |       |       InputSoundFile.hpp
+        |       |       Listener.hpp
+        |       |       Music.hpp
+        |       |       OutputSoundFile.hpp
+        |       |       Sound.hpp
+        |       |       SoundBuffer.hpp
+        |       |       SoundBufferRecorder.hpp
+        |       |       SoundFileFactory.hpp
+        |       |       SoundFileFactory.inl
+        |       |       SoundFileReader.hpp
+        |       |       SoundFileWriter.hpp
+        |       |       SoundRecorder.hpp
+        |       |       SoundSource.hpp
+        |       |       SoundStream.hpp
+        |       |       
+        |       +---Graphics
+        |       |       BlendMode.hpp
+        |       |       CircleShape.hpp
+        |       |       Color.hpp
+        |       |       ConvexShape.hpp
+        |       |       Drawable.hpp
+        |       |       Export.hpp
+        |       |       Font.hpp
+        |       |       Glsl.hpp
+        |       |       Glsl.inl
+        |       |       Glyph.hpp
+        |       |       Image.hpp
+        |       |       PrimitiveType.hpp
+        |       |       Rect.hpp
+        |       |       Rect.inl
+        |       |       RectangleShape.hpp
+        |       |       RenderStates.hpp
+        |       |       RenderTarget.hpp
+        |       |       RenderTexture.hpp
+        |       |       RenderWindow.hpp
+        |       |       Shader.hpp
+        |       |       Shape.hpp
+        |       |       Sprite.hpp
+        |       |       Text.hpp
+        |       |       Texture.hpp
+        |       |       Transform.hpp
+        |       |       Transformable.hpp
+        |       |       Vertex.hpp
+        |       |       VertexArray.hpp
+        |       |       VertexBuffer.hpp
+        |       |       View.hpp
+        |       |       
+        |       +---Network
+        |       |       Export.hpp
+        |       |       Ftp.hpp
+        |       |       Http.hpp
+        |       |       IpAddress.hpp
+        |       |       Packet.hpp
+        |       |       Socket.hpp
+        |       |       SocketHandle.hpp
+        |       |       SocketSelector.hpp
+        |       |       TcpListener.hpp
+        |       |       TcpSocket.hpp
+        |       |       UdpSocket.hpp
+        |       |       
+        |       +---System
+        |       |       Clock.hpp
+        |       |       Err.hpp
+        |       |       Export.hpp
+        |       |       FileInputStream.hpp
+        |       |       InputStream.hpp
+        |       |       Lock.hpp
+        |       |       MemoryInputStream.hpp
+        |       |       Mutex.hpp
+        |       |       NativeActivity.hpp
+        |       |       NonCopyable.hpp
+        |       |       Sleep.hpp
+        |       |       String.hpp
+        |       |       String.inl
+        |       |       Thread.hpp
+        |       |       Thread.inl
+        |       |       ThreadLocal.hpp
+        |       |       ThreadLocalPtr.hpp
+        |       |       ThreadLocalPtr.inl
+        |       |       Time.hpp
+        |       |       Utf.hpp
+        |       |       Utf.inl
+        |       |       Vector2.hpp
+        |       |       Vector2.inl
+        |       |       Vector3.hpp
+        |       |       Vector3.inl
+        |       |       
+        |       \---Window
+        |               Clipboard.hpp
+        |               Context.hpp
+        |               ContextSettings.hpp
+        |               Cursor.hpp
+        |               Event.hpp
+        |               Export.hpp
+        |               GlResource.hpp
+        |               Joystick.hpp
+        |               Keyboard.hpp
+        |               Mouse.hpp
+        |               Sensor.hpp
+        |               Touch.hpp
+        |               VideoMode.hpp
+        |               Window.hpp
+        |               WindowHandle.hpp
+        |               WindowStyle.hpp
+        |               
+        \---lib
+                libsfml-audio.a
+                libsfml-graphics.a
+                libsfml-main.a
+                libsfml-network.a
+                libsfml-system.a
+                libsfml-window.a
+                
