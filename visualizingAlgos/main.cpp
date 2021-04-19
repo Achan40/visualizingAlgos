@@ -9,10 +9,10 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "visualizingAlgos");
 
     // create a vector of CustRect objects. (number of objects, some separator)
-    std::vector<CustRect> x = CustRect::vectRect(100,10);
+    std::vector<CustRect> vCustRect = CustRect::vectRect(100);
 
     // create a Sortable object which takes in a vector of CustRect objects
-    Sortable test(x);
+    Sortable SortableV(vCustRect);
 
     while (window.isOpen())
     {
@@ -26,26 +26,24 @@ int main()
 
             // sort rectangles when the B key is pressed
             if (event.key.code == sf::Keyboard::B){
-                test.begin_bubble = true;  
+                SortableV.begin_bubble = true;  
             }
             // reset Sortable object when R key is pressed
             if (event.key.code == sf::Keyboard::R){
-                test.vCustRect = test.vResetCustRect; 
-                test.begin_bubble = false;
-                test.has_ended = false;
+                SortableV.resetBubble();
             }
         }
         /* The bubbleSort method updates the vector every swap/move. Since SFML output
         is in a permanant loop while the window is open, we had to accout for this in our
         implementation
         */
-        test.bubbleSort();
+        SortableV.bubbleSort();
 
         // begin drawing entire vector
         window.clear();
 
-        for (int i = 0; i < test.vCustRect.size(); i++){
-            window.draw(test.vCustRect[i]);
+        for (int i = 0; i < SortableV.vCustRect.size(); i++){
+            window.draw(SortableV.vCustRect[i]);
         }
 
         window.display();
