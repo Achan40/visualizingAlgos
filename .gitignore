@@ -31,5 +31,8 @@
 *.out
 *.app
 
-# Ignore SFML folder
+# Ignore IDE specific folders
+.vscode/
+
+# Ignore SFML source headers
 SFML/
