@@ -24,13 +24,17 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
 
-            // sort rectangles when the B key is pressed
+            // sort rectangles using bubble sort when the B key is pressed
             if (event.key.code == sf::Keyboard::B){
                 SortableV.begin_bubble = true;  
             }
+            // sort rectangles using insertion sort when the I key is pressed
+            if (event.key.code == sf::Keyboard::I){
+                SortableV.begin_insertion_sort = true;  
+            }
             // reset Sortable object when R key is pressed
             if (event.key.code == sf::Keyboard::R){
-                SortableV.resetBubble();
+                SortableV.reset();
             }
         }
         /* The bubbleSort method updates the vector every swap/move. Since SFML output
@@ -38,6 +42,7 @@ int main()
         implementation
         */
         SortableV.bubbleSort();
+        SortableV.insertionSort();
 
         // begin drawing entire vector
         window.clear();

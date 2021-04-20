@@ -10,9 +10,13 @@ class Sortable{
         sf::Clock clock;
         int jj = 0;
         int ii;
+        int j;
+        int i = 1;
+        int key;
         bool begin_bubble = false;
         bool has_ended = false;
-        float sort_speed = .01;
+        float sort_speed = .5;
+        bool begin_insertion_sort = false;
 
         Sortable(std::vector<CustRect> vector){
             this-> vCustRect = vector;
@@ -22,12 +26,14 @@ class Sortable{
 
         ~Sortable(){};
 
-        // Reset object if bubble sort has occured
-        void resetBubble(){
+        // Reset object
+        void reset(){
             vCustRect = vResetCustRect; 
             jj = 0;
             ii = vCustRect.size();
+            i = 1;
             begin_bubble = false;
+            begin_insertion_sort = false;
             has_ended = false;
         }
 
@@ -40,14 +46,15 @@ class Sortable{
             sf::Time elapsed = clock.getElapsedTime();
             // If the a certain key is pressed, the length of time since the method was called is greater than n seconds, and the sort has not ended...
             if (begin_bubble == true && elapsed.asSeconds() > sort_speed && has_ended == false){
+                // resart the clock so our n second timer can begin again
+                clock.restart();
+
                 // Set color, so that we can see which shape is being sorted at the moment
                 vCustRect[jj].setFillColor(sf::Color::Green);
                 vCustRect[jj+1].setFillColor(sf::Color::Green);
                 vCustRect[jj].setFillColor(sf::Color::White);
 
-                // resart the clock so our n second timer can begin again
-                clock.restart();
-
+                
                 // swap the current shape with next shape if the next shape is larger
                 if (vCustRect[jj].rectVal > vCustRect[jj+1].rectVal){
                     CustRect::swap(vCustRect[jj],vCustRect[jj+1]);
@@ -69,6 +76,35 @@ class Sortable{
                 }
             }
         }
+
+        void insertionSort(){
+            // create time object using the clock. This is so we can manage how fast each iteration occurs.
+            sf::Time elapsed = clock.getElapsedTime(); 
+            if (begin_insertion_sort == true && elapsed.asSeconds() > sort_speed && has_ended == false){
+                // resart the clock so our n second timer can begin again
+                clock.restart();
+                
+                // store value of the ith value 
+                key = vCustRect[i].rectVal;
+                j = i - 1;
+
+                while (j >= 0 && vCustRect[j].rectVal > key){
+                    CustRect::swap(vCustRect[j+1], vCustRect[j]);
+                    j--;
+                } 
+                
+                vCustRect[j + 1].rectVal = key;
+                i++;
+                std::cout << i;
+
+                // end condition
+                if (i == vCustRect.size()){
+                    has_ended = true;
+                }
+                
+            }
+        }
+
 };
 
 #endif 
