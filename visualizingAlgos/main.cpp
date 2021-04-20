@@ -9,7 +9,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "visualizingAlgos");
 
     // create a vector of CustRect objects. (number of objects, some separator)
-    std::vector<CustRect> vCustRect = CustRect::vectRect(100);
+    std::vector<CustRect> vCustRect = CustRect::vectRect(50);
 
     // create a Sortable object which takes in a vector of CustRect objects
     Sortable SortableV(vCustRect);
@@ -37,9 +37,9 @@ int main()
                 SortableV.reset();
             }
         }
-        /* The bubbleSort method updates the vector every swap/move. Since SFML output
+        /* The following methods updates the vector every swap/move. Since SFML output
         is in a permanant loop while the window is open, we had to accout for this in our
-        implementation
+        implementation.
         */
         SortableV.bubbleSort();
         SortableV.insertionSort();

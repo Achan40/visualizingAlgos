@@ -8,14 +8,19 @@ class Sortable{
         std::vector<CustRect> vCustRect;
         std::vector<CustRect> vResetCustRect;
         sf::Clock clock;
+        bool has_ended = false;
+        float sort_speed = .01;
+
+        // bubble sort variables
         int jj = 0;
         int ii;
+        bool begin_bubble = false;
+
+        // insertion sort variables
         int j;
         int i = 1;
         int key;
-        bool begin_bubble = false;
-        bool has_ended = false;
-        float sort_speed = .5;
+        bool inner_loop = false;
         bool begin_insertion_sort = false;
 
         Sortable(std::vector<CustRect> vector){
@@ -83,20 +88,38 @@ class Sortable{
             if (begin_insertion_sort == true && elapsed.asSeconds() > sort_speed && has_ended == false){
                 // resart the clock so our n second timer can begin again
                 clock.restart();
-                
-                // store value of the ith value 
-                key = vCustRect[i].rectVal;
-                j = i - 1;
 
-                while (j >= 0 && vCustRect[j].rectVal > key){
-                    CustRect::swap(vCustRect[j+1], vCustRect[j]);
+                // Set color, so that we can see which shape is being sorted at the moment
+                vCustRect[j+1].setFillColor(sf::Color::Green);
+                vCustRect[j].setFillColor(sf::Color::Green);
+                vCustRect[j+1].setFillColor(sf::Color::White);
+
+                // "Outer loop" of insertion sort. Boolean condition so this code doesn't execute while "inner loop" is ongoing
+                if (inner_loop == false){
+                    // on start, store the value of the ith rectangle (where i = 1 at start)
+                    key = vCustRect[i].rectVal;
+                    // every time "Outer loop" occurs, set j to be 1 less than i.
+                    j = i - 1;
+                }
+
+                // if the jth rectangle is larger than the ith rectangle, swap the jth rectangle and the j+1 rectangle,
+                // until the ith rectangle is the largest. (move smaller values down the chain)
+                if ( j >= 0 && vCustRect[j].rectVal > key){
+                    CustRect::swap(vCustRect[j], vCustRect[j+1]);
+                    // move down the chain by one. Set inner_loop = true, so that "outer loop" code does not execute.
                     j--;
-                } 
-                
-                vCustRect[j + 1].rectVal = key;
-                i++;
-                std::cout << i;
-
+                    inner_loop = true;
+                    
+                    // j cannot be a negative value, if it is, set it to zero
+                    if (j<0){
+                        j = 0;
+                    }
+                }
+                // If the iteration of "inner loop" is fully sorted, increment outer loop by one
+                else {
+                    inner_loop = false;
+                    i++;
+                }
                 // end condition
                 if (i == vCustRect.size()){
                     has_ended = true;
