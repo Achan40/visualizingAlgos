@@ -9,7 +9,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "visualizingAlgos");
 
     // create a vector of CustRect objects. (number of objects, some separator)
-    std::vector<CustRect> vCustRect = CustRect::vectRect(50);
+    std::vector<CustRect> vCustRect = CustRect::vectRect(100);
 
     // create a Sortable object which takes in a vector of CustRect objects
     Sortable SortableV(vCustRect);
@@ -26,11 +26,18 @@ int main()
 
             // sort rectangles using bubble sort when the B key is pressed
             if (event.key.code == sf::Keyboard::B){
+                SortableV.reset();
                 SortableV.begin_bubble = true;  
             }
             // sort rectangles using insertion sort when the I key is pressed
             if (event.key.code == sf::Keyboard::I){
+                SortableV.reset();
                 SortableV.begin_insertion_sort = true;  
+            }
+            // sort rectangles using shell sort when the S key is pressed
+            if (event.key.code == sf::Keyboard::S){
+                SortableV.reset();
+                SortableV.begin_shell_sort = true;  
             }
             // reset Sortable object when R key is pressed
             if (event.key.code == sf::Keyboard::R){
@@ -43,6 +50,7 @@ int main()
         */
         SortableV.bubbleSort();
         SortableV.insertionSort();
+        SortableV.shellSort();
 
         // begin drawing entire vector
         window.clear();

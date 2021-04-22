@@ -9,7 +9,7 @@ class Sortable{
         std::vector<CustRect> vResetCustRect;
         sf::Clock clock;
         bool has_ended = false;
-        float sort_speed = .01;
+        float sort_speed = .1;
 
         // bubble sort variables
         int jj = 0;
@@ -23,6 +23,14 @@ class Sortable{
         bool inner_loop = false;
         bool begin_insertion_sort = false;
 
+        // shell sort variables
+        int x = 0;
+        int y = 0;
+        int z = 0;
+        bool ssinner = false;
+        bool ssmiddle = false;
+        bool begin_shell_sort = false;
+
         Sortable(std::vector<CustRect> vector){
             this-> vCustRect = vector;
             this-> vResetCustRect = vector;
@@ -33,12 +41,20 @@ class Sortable{
 
         // Reset object
         void reset(){
+            // Reset vector
             vCustRect = vResetCustRect; 
+
+            // Reset bubble sort variables
             jj = 0;
             ii = vCustRect.size();
-            i = 1;
             begin_bubble = false;
+
+            // Reset Insertion sort variables
+            i = 1;
+            j = i - 1;
+            key = vCustRect[i].rectVal;
             begin_insertion_sort = false;
+
             has_ended = false;
         }
 
@@ -120,11 +136,56 @@ class Sortable{
                     inner_loop = false;
                     i++;
                 }
+
                 // end condition
                 if (i == vCustRect.size()){
                     has_ended = true;
+                    inner_loop = false;
                 }
                 
+            }
+        }
+
+        void shellSort(){
+            sf::Time elapsed = clock.getElapsedTime();
+            if(begin_shell_sort == true && elapsed.asSeconds() > sort_speed && has_ended == false){
+                clock.restart();
+                // outer loop start condition
+                if (ssmiddle == false && ssinner == false){
+                    std::cout << "Outer";
+                    x++;
+                
+                // middle loop start condition
+                } if (ssinner == false){
+                    std::cout << "middle";
+                    y++;
+                    ssmiddle = true;
+                    
+                // inner loop start condition
+                } if (ssmiddle == true){
+                    std::cout << "inner";
+                    z++;
+                    // inner loop end condition
+                    ssinner = true;
+                    if (z == 3) {
+                        z = 0;
+                        ssinner = false;
+                    }
+                }
+
+                // middle loop end condition
+                if (y == 2 && ssinner == false) {
+                    y = 0;
+                    ssmiddle = false;
+                } 
+
+                // outer loop end condition
+                if (x == 3 && ssmiddle == false ) {
+                    std::cout << "End";
+                    has_ended = true;
+                } 
+                
+
             }
         }
 
