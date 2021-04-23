@@ -9,7 +9,7 @@ class Sortable{
         std::vector<CustRect> vResetCustRect;
         sf::Clock clock;
         bool has_ended = false;
-        float sort_speed = 1;
+        float sort_speed = .1;
 
         // bubble sort variables
         int jj = 0;
@@ -24,7 +24,8 @@ class Sortable{
         bool begin_insertion_sort = false;
 
         // shell sort variables
-        int ss_n = vCustRect.size()+1;
+        int ss_n = vCustRect.size();
+        // using a gap size of n/2
         int ss_gap = ss_n/2;
         int ss_i = ss_gap;
         int ss_temp;
@@ -57,15 +58,15 @@ class Sortable{
             key = vCustRect[i].rectVal;
             begin_insertion_sort = false;
 
-            // Reset Shell sort
-             ss_n = vCustRect.size();
-             ss_gap = ss_n/2;
-             ss_i = ss_gap;
-             ss_temp;
-             ss_j = ss_i;
-             ssinner = false;
-             ssmiddle = false;
-             begin_shell_sort = false;
+            // Reset Shell sort variables
+            ss_n = vCustRect.size()+1;
+            ss_gap = ss_n/2;
+            ss_i = ss_gap;
+            ss_temp;
+            ss_j = ss_i;
+            ssinner = false;
+            ssmiddle = false;
+            begin_shell_sort = false;
 
             has_ended = false;
         }
@@ -162,38 +163,51 @@ class Sortable{
             sf::Time elapsed = clock.getElapsedTime();
             if(begin_shell_sort == true && elapsed.asSeconds() > sort_speed && has_ended == false){
                 clock.restart();
+                // Set color, so that we can see which shape is being sorted at the moment
+                // vCustRect[ss_j].setFillColor(sf::Color::Green);
+                // vCustRect[ss_j-ss_gap].setFillColor(sf::Color::Green);
+                // vCustRect[ss_j].setFillColor(sf::Color::White);
 
-                // outer increment condition
+                // outer loop start condition
                 if (ssmiddle == false && ssinner == false){
-                    std::cout << "Outer";
-                    // FIX ITERATIONS THEY SHOULD OCCUR AT THE END
-                    ss_gap /= 2;
-                
-                // middle increment condition
+                    // reset middle loop starting variable everytime the outerloop starts
+                    ss_i = ss_gap;                  
+
+                // middle loop starts when inner loop has not started
                 } if (ssinner == false){
-                    std::cout << "Middle";
-                    ss_temp = vCustRect[ss_i].rectVal;
-                    // FIX ITERATIONS THEY SHOULD OCCUR AT THE END
-                    ss_i += 1;
+                    // set flag
                     ssmiddle = true;
+                    // setting temp variable, which is used in the inner loop, this temp variable resets when
+                    // inner loop is finished and another iteration of the middle lopp is started
+                    ss_temp = vCustRect[ss_i].rectVal;
                     
-                // inner loop start condition
-                } if (ssmiddle == true){
-                    std::cout << "inner";
-                    vCustRect[ss_j].SetSize(vCustRect[ss_j - ss_gap].rectVal);
-                    ss_j -= ss_gap;
+                    // reset inner loop starting variable every iteration of a middle loop
+                    ss_j = ss_i;
+                }
+
+                // inner loop start condition, when a middle loop has begun
+                if (ssmiddle == true){
+                    // set flag
                     ssinner = true;
-                    // inner loop end condition
-                    if (ss_j < ss_gap && vCustRect[ss_j - ss_gap].rectVal <= ss_temp) {
-                        vCustRect[ss_j].SetSize(ss_temp); 
-                        // reset inner loop
-                        ss_j = ss_i;
+                    
+                    // an insertion sort depending on a gap
+                    if (ss_j >= ss_gap && vCustRect[ss_j - ss_gap].rectVal > ss_temp) {
+                        CustRect::swap(vCustRect[ss_j],vCustRect[ss_j - ss_gap]);
+                    // inner loop ends if condition is not met
+                    } else {
                         ssinner = false;
+                        // increment middle loop when inner loop ends
+                        ss_i += 1;
                     }
+                    // increment outer loop
+                    ss_j -= ss_gap;
                 }
 
                 // middle loop end condition
                 if (ss_i >= ss_n && ssinner == false) {
+                    // when middle loop ends, increment the outer loop
+                    ss_gap /= 2;
+                    // set flag
                     ssmiddle = false;
                 } 
 
@@ -203,7 +217,6 @@ class Sortable{
                     has_ended = true;
                 } 
                 
-
             }
         }
 
