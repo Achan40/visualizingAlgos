@@ -10,3 +10,4 @@ This project currently works to visualize the following sorting algorithms:
 Press `R` to reset sorting.</br>
 Press `B` to sort using the Bubble Sort algorithm.</br>
 Press `I` to sort using the Insertion Sort algorithm.</br>
+Press `S` to sort using the Shell Sort algorithm.</br>
