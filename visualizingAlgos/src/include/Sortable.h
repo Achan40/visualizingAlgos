@@ -9,7 +9,7 @@ class Sortable{
         std::vector<CustRect> vResetCustRect;
         sf::Clock clock;
         bool has_ended = false;
-        float sort_speed = .1;
+        float sort_speed = 1;
 
         // bubble sort variables
         int jj = 0;
@@ -24,9 +24,11 @@ class Sortable{
         bool begin_insertion_sort = false;
 
         // shell sort variables
-        int x = 0;
-        int y = 0;
-        int z = 0;
+        int ss_n = vCustRect.size()+1;
+        int ss_gap = ss_n/2;
+        int ss_i = ss_gap;
+        int ss_temp;
+        int ss_j = ss_i;
         bool ssinner = false;
         bool ssmiddle = false;
         bool begin_shell_sort = false;
@@ -54,6 +56,16 @@ class Sortable{
             j = i - 1;
             key = vCustRect[i].rectVal;
             begin_insertion_sort = false;
+
+            // Reset Shell sort
+             ss_n = vCustRect.size();
+             ss_gap = ss_n/2;
+             ss_i = ss_gap;
+             ss_temp;
+             ss_j = ss_i;
+             ssinner = false;
+             ssmiddle = false;
+             begin_shell_sort = false;
 
             has_ended = false;
         }
@@ -150,37 +162,41 @@ class Sortable{
             sf::Time elapsed = clock.getElapsedTime();
             if(begin_shell_sort == true && elapsed.asSeconds() > sort_speed && has_ended == false){
                 clock.restart();
-                // outer loop start condition
+
+                // outer increment condition
                 if (ssmiddle == false && ssinner == false){
                     std::cout << "Outer";
-                    x++;
+                    ss_gap /= 2;
                 
-                // middle loop start condition
+                // middle increment condition
                 } if (ssinner == false){
-                    std::cout << "middle";
-                    y++;
+                    std::cout << "Middle";
+                    ss_temp = vCustRect[ss_i].rectVal;
+                    ss_i += 1;
                     ssmiddle = true;
                     
                 // inner loop start condition
                 } if (ssmiddle == true){
                     std::cout << "inner";
-                    z++;
-                    // inner loop end condition
+                    vCustRect[ss_j].SetSize(vCustRect[ss_j - ss_gap].rectVal);
+                    ss_j -= ss_gap;
                     ssinner = true;
-                    if (z == 3) {
-                        z = 0;
+                    // inner loop end condition
+                    if (ss_j < ss_gap && vCustRect[ss_j - ss_gap].rectVal <= ss_temp) {
+                        vCustRect[ss_j].SetSize(ss_temp); 
+                        ss_j = ss_i;
                         ssinner = false;
                     }
                 }
 
                 // middle loop end condition
-                if (y == 2 && ssinner == false) {
-                    y = 0;
+                if (ss_i >= ss_n && ssinner == false) {
+                    
                     ssmiddle = false;
                 } 
 
                 // outer loop end condition
-                if (x == 3 && ssmiddle == false ) {
+                if (ss_gap <= 0 && ssmiddle == false ) {
                     std::cout << "End";
                     has_ended = true;
                 } 
