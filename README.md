@@ -5,6 +5,7 @@ Using [SFML](https://www.sfml-dev.org/download.php) with c++ to visualize algori
 This project currently works to visualize the following sorting algorithms:
 * Bubble Sort 
 * Insertion Sort
+* Shell Sort
 
 ### Instructions
 Press `R` to reset sorting.</br>
