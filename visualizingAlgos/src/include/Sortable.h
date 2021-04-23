@@ -166,12 +166,14 @@ class Sortable{
                 // outer increment condition
                 if (ssmiddle == false && ssinner == false){
                     std::cout << "Outer";
+                    // FIX ITERATIONS THEY SHOULD OCCUR AT THE END
                     ss_gap /= 2;
                 
                 // middle increment condition
                 } if (ssinner == false){
                     std::cout << "Middle";
                     ss_temp = vCustRect[ss_i].rectVal;
+                    // FIX ITERATIONS THEY SHOULD OCCUR AT THE END
                     ss_i += 1;
                     ssmiddle = true;
                     
@@ -184,6 +186,7 @@ class Sortable{
                     // inner loop end condition
                     if (ss_j < ss_gap && vCustRect[ss_j - ss_gap].rectVal <= ss_temp) {
                         vCustRect[ss_j].SetSize(ss_temp); 
+                        // reset inner loop
                         ss_j = ss_i;
                         ssinner = false;
                     }
@@ -191,7 +194,6 @@ class Sortable{
 
                 // middle loop end condition
                 if (ss_i >= ss_n && ssinner == false) {
-                    
                     ssmiddle = false;
                 } 
 
