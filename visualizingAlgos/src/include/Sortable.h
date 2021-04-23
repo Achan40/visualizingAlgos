@@ -9,7 +9,7 @@ class Sortable{
         std::vector<CustRect> vResetCustRect;
         sf::Clock clock;
         bool has_ended = false;
-        float sort_speed = .1;
+        float sort_speed = .01;
 
         // bubble sort variables
         int jj = 0;
@@ -163,10 +163,6 @@ class Sortable{
             sf::Time elapsed = clock.getElapsedTime();
             if(begin_shell_sort == true && elapsed.asSeconds() > sort_speed && has_ended == false){
                 clock.restart();
-                // Set color, so that we can see which shape is being sorted at the moment
-                // vCustRect[ss_j].setFillColor(sf::Color::Green);
-                // vCustRect[ss_j-ss_gap].setFillColor(sf::Color::Green);
-                // vCustRect[ss_j].setFillColor(sf::Color::White);
 
                 // outer loop start condition
                 if (ssmiddle == false && ssinner == false){
@@ -189,10 +185,13 @@ class Sortable{
                 if (ssmiddle == true){
                     // set flag
                     ssinner = true;
+                    // Set color, so that we can see which shape is being sorted at the moment
                     
                     // an insertion sort depending on a gap
                     if (ss_j >= ss_gap && vCustRect[ss_j - ss_gap].rectVal > ss_temp) {
                         CustRect::swap(vCustRect[ss_j],vCustRect[ss_j - ss_gap]);
+                        
+                        
                     // inner loop ends if condition is not met
                     } else {
                         ssinner = false;
@@ -213,7 +212,6 @@ class Sortable{
 
                 // outer loop end condition
                 if (ss_gap <= 0 && ssmiddle == false ) {
-                    std::cout << "End";
                     has_ended = true;
                 } 
                 
