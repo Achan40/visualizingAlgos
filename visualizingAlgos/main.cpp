@@ -1,4 +1,4 @@
-#include <Sortable.h>
+#include <Sortable.cpp>
 
 int main()
 {
@@ -44,7 +44,7 @@ int main()
                 SortableV.reset();
             }
         }
-        /* The following methods updates the vector every swap/move. Since SFML output
+        /* The following methods update the vector every swap/move. Since SFML output
         is in a permanant loop while the window is open, we had to accout for this in our
         implementation.
         */
